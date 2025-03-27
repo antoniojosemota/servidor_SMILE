@@ -6,14 +6,11 @@ Este projeto consiste em um bot do Telegram integrado a uma API Flask e ao Thing
 
 ## Índice
 
-1. [Descrição do Projeto](#descrição-do-projeto)
-2. [Funcionalidades](#funcionalidades)
-4. [Configuração e Instalação](#configuração-e-instalação)
-5. [Endpoints do Flask](#endpoints-do-flask)
-6. [Como Utilizar](#como-utilizar)
-7. [Notas de Segurança](#notas-de-segurança)
-8. [Licença](#licença)
-
+1. [Descrição do Projeto](#descrição-do-projeto)  
+2. [Funcionalidades](#funcionalidades)  
+3. [Configuração e Instalação](#configuração-e-instalação)  
+   - [Configuração dos Tokens e Credenciais](#configuração-dos-tokens-e-credenciais)  
+4. [Como Utilizar](#como-utilizar) 
 ---
 
 ## Descrição do Projeto
@@ -36,10 +33,39 @@ O fluxo principal inclui:
   - Estimativa de custo em reais.
   - Link para dashboard gráfico no Thinger.io.
 - **Infraestrutura Multithread**: O bot Telegram e o servidor Flask rodam em threads separadas para maior eficiência.
+  - O servidor Flask e o bot do Telegram são executados simultaneamente em threads separadas, permitindo a interação contínua enquanto o servidor Flask coleta e envia os dados. 
 
 ## Configuração e Instalação
 
 1. **Clone o repositório**:
    ```bash
-   git clone <(https://github.com/antoniojosemota/servidor_SMILE.git)>
-   cd <nome-do-diretorio>
+   git clone https://github.com/antoniojosemota/servidor_SMILE.git
+  
+## Configuração dos Tokens e Credenciais
+
+### Telegram Bot Token
+Substitua `BOT_TOKEN` pelo token do seu bot do Telegram (obtido via [@BotFather](https://t.me/BotFather)):
+
+```python
+Token do chat telegram
+BOT_TOKEN = 'SEU_TOKEN'
+
+Credenciais do dispositivo Thinger.io
+THINGER_USERNAME = 'USERNAME'
+THINGER_DEVICE_ID = 'DEVICE_ID'
+THINGER_DEVICE_CREDENTIAL = 'DEVICE_CREDENCIAL'
+
+ID do chat do Telegram
+TELEGRAM_CHAT_ID = 'SEU_CHAT_ID
+```
+
+## Como Utilizar
+
+### Como Executar o Script Principal
+
+Para iniciar o sistema, execute o arquivo Python principal com o comando:
+
+```bash
+python3 nome_do_arquivo.py
+
+Após iniciar, ira se conectar ao Thinger IO e vai ativar o bot no Telegram.
