@@ -6,17 +6,17 @@ from telebot import types
 import threading
 
 # Token do bot
-BOT_TOKEN = '7543094329:AAFoq_B8oq_eEq4BijCS4CXvbOgLFOj2NBo'
+BOT_TOKEN = 'SEU_TOKEN'
 bot = telebot.TeleBot(BOT_TOKEN)
 app = Flask(__name__)
 
 # Credenciais do dispositivo Thinger.io
-THINGER_USERNAME = 'picoantonio'
-THINGER_DEVICE_ID = 'picobot'
-THINGER_DEVICE_CREDENTIAL = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJEZXZpY2VDYWxsYmFja19waWNvYm90Iiwic3ZyIjoidXMtZWFzdC5hd3MudGhpbmdlci5pbyIsInVzciI6InBpY29hbnRvbmlvIn0.VFPZNCvCHGFax2mErQEoYMZUYvEGr2xdCw8gWhGi0lc'
+THINGER_USERNAME = 'USERNAME'
+THINGER_DEVICE_ID = 'DEVICE_ID'
+THINGER_DEVICE_CREDENTIAL = 'DEVICE_CREDENCIAL'
 
 # ID do chat do Telegram
-TELEGRAM_CHAT_ID = '1100548115'
+TELEGRAM_CHAT_ID = 'SEU_CHAT_ID'
 
 # ✅ Variável global para armazenar o valor de kWh
 current_kwh = None
