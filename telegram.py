@@ -6,28 +6,33 @@ from telebot import types
 import threading
 
 # Token do bot
-BOT_TOKEN = 'SEU_TOKEN'
+BOT_TOKEN = '7543094329:AAFoq_B8oq_eEq4BijCS4CXvbOgLFOj2NBo'
 bot = telebot.TeleBot(BOT_TOKEN)
 app = Flask(__name__)
 
 # Credenciais do dispositivo Thinger.io
-THINGER_USERNAME = 'USERNAME'
-THINGER_DEVICE_ID = 'DEVICE_ID'
-THINGER_DEVICE_CREDENTIAL = 'DEVICE_CREDENCIAL'
+THINGER_USERNAME = 'picoantonio'
+THINGER_DEVICE_ID = 'picobot'
+THINGER_DEVICE_CREDENTIAL = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJEZXZpY2VDYWxsYmFja19waWNvYm90Iiwic3ZyIjoidXMtZWFzdC5hd3MudGhpbmdlci5pbyIsInVzciI6InBpY29hbnRvbmlvIn0.VFPZNCvCHGFax2mErQEoYMZUYvEGr2xdCw8gWhGi0lc'
 
 # ID do chat do Telegram
-TELEGRAM_CHAT_ID = 'SEU_CHAT_ID'
+TELEGRAM_CHAT_ID = '1100548115'
 
 # ✅ Variável global para armazenar o valor de kWh
-current_kwh = None
-total = None
-estimate = None
+current_kwh = 0.0
+total = 0.0
+estimate = 0.0
+limite = 10
+cont = 0
 
 @app.route('/update', methods=['GET'])
 def update():
     global current_kwh
     global total
     global estimate
+    global limite
+    global cont
+
     print("Received a request")
     print(f"Request args: {request.args}")
 
@@ -53,6 +58,12 @@ def update():
             'total': total
         }
 
+        if total > limite:
+            if cont <= 0:
+                bot.send_message(TELEGRAM_CHAT_ID, f"⚠️ Alerta: O consumo atual ({total} KWh) ultrapassou o limite de {limite} KWh!")
+                cont = 1
+
+
         response = requests.post(url, json=data, headers=headers)
         if response.status_code == 200:
             return f"Potência {kwh} W recebida e armazenada no Thinger.io", 200
@@ -74,6 +85,20 @@ def menu_principal():
     markup.add(botao1, botao2, botao4, botao5)
     markup.add(botao3)
     return markup
+
+@bot.message_handler(commands=['set_limit'])
+def set_limit(message):
+    global limite
+    try:
+        new_limit = float(message.text.split()[1])
+        limite = new_limit
+        bot.reply_to(message, f"✅ Limite atualizado para: {limite}")
+    except(IndexError, ValueError):
+        bot.reply_to(message, "❌ Envie um valor numérico após o comando, ex: /set_limite 20")
+
+@bot.message_handler(commands=['get_limite'])
+def obter_limite(message):
+    bot.reply_to(message, f"📏 O limite atual é: {limite}")
 
 # ✅ Comando /start para exibir o menu
 @bot.message_handler(commands=['start'])
